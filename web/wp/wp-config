@@ -1,0 +1,105 @@
+<?php
+
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', '');
+
+
+use Dotenv\Dotenv;
+
+$root_dir = dirname(__DIR__);
+$webroot_dir = $root_dir . '/web';
+
+require_once $root_dir . '/vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable($root_dir);
+$dotenv->load();
+
+# Database settings
+define('DB_NAME', getenv('DB_NAME'));
+define('DB_USER', getenv('DB_USER'));
+define('DB_PASSWORD', getenv('DB_PASSWORD'));
+define('DB_HOST', getenv('DB_HOST'));
+
+# Database table prefix
+$table_prefix = getenv('DB_TABLE_PREFIX') ?: 'wp_';
+
+# Debugging mode
+if (getenv('WP_DEBUG') === 'true') {
+    define('WP_DEBUG', true);
+    define('WP_DEBUG_LOG', true);
+    define('WP_DEBUG_DISPLAY', true);
+    @ini_set('display_errors', 1);
+} else {
+    define('WP_DEBUG', false);
+    define('WP_DEBUG_LOG', false);
+    define('WP_DEBUG_DISPLAY', false);
+    @ini_set('display_errors', 0);
+}
+// Disable file editing in the admin
+define('DISALLOW_FILE_EDIT', true);
+// Disable file modifications
+define('DISALLOW_FILE_MODS', true);
+// Disable indexing
+define('DISALLOW_INDEXING', true);
+
+// Disable automatic updates
+define('AUTOMATIC_UPDATER_DISABLED', true);
+
+
+/**#@+
+ * Authentication unique keys and salts.
+ *
+ * Change these to different unique phrases! You can generate these using
+ * the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
+ *
+ * You can change these at any point in time to invalidate all existing cookies.
+ * This will force all users to have to log in again.
+ *
+ * @since 2.6.0
+ */
+
+define('AUTH_KEY', '1Dt}V8_wB}2b81HTk3_b_g*XO$s0<(%v;5$6b(/_dIj#D^lon[Q]-y0fq?q)U(>B');
+define('SECURE_AUTH_KEY', 'l;c;}]Q9dncOM@5_FY$DaBKNF/{^^rfj1$c;x:42FohpVe*+U.T%B4nk*b(G1b.');
+define('LOGGED_IN_KEY', 'djC^wf!2n^R0&:+F92{DjXRe}=h=kOKauOU-h@5_chlM@)q^j+L|#9Rx5Vwakk[>');
+define('NONCE_KEY', '|*:Vg(UtF=N1>B+?t.jiy$QFiVI#a;L}`<XEDimYzK((biu8l3XH3jqBad&L=4Du');
+define('AUTH_SALT', '(yI9.O3:1=NI!*egwL-0FBp8|BB#so*#oW&r;<Gwf`zIF}A<)3rDIESRPEqSGGqo');
+define('SECURE_AUTH_SALT', 'MWcJ.2eX5;ghkE_+rMC*X(GG/sF&!h,_6{ml`rEGFkdn>Pxl%RcHO6@&---S&wG`');
+define('LOGGED_IN_SALT', 'PGZXgX?_|(AYksu4/-(?JLN7k-Bm=.r[5!+VBsEm^PT19(9*6C:YR&9w-;YjZCfy');
+define('NONCE_SALT', 'WYxBKS1yAPoL(!H1&Ce{}4<TSkIh6y@WHGcUERM9FERasZW%B;#=CO$;(_)<{Vsa');
+
+#Force SSL on admin pages
+define('FORCE_SSL_ADMIN', true);
+// Set the absolute path to the WordPress directory
+if (!defined('WP_CONTENT_DIR')) {
+    define('WP_CONTENT_DIR', $webroot_dir . '/wp-content');
+}
+// Set the absolute path to the WordPress plugins directory
+if (!defined('WP_PLUGIN_DIR')) {
+    define('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins');
+}
+// Set the absolute path to the WordPress themes directory
+if (!defined('WP_THEME_DIR')) {
+    define('WP_THEME_DIR', WP_CONTENT_DIR . '/themes');
+}
+// Set the absolute path to the WordPress uploads directory
+if (!defined('UPLOADS')) {
+    define('UPLOADS', 'wp-content/uploads');
+}
+// Set the absolute path to the WordPress languages directory
+if (!defined('WPLANG')) {
+    define('WPLANG', '');
+}
+// Set the absolute path to the WordPress includes directory
+if (!defined('WPINC')) {
+    define('WPINC', 'wp-includes');
+}
+// Set the absolute path to the WordPress admin directory
+if (!defined('WP_ADMIN')) {
+    define('WP_ADMIN', 'wp-admin');
+}
+/*That's all, stop editing! Happy blogging.*/
+if (!defined('ABSPATH')) {
+    define('ABSPATH', __DIR__ . '/');
+}
+
+require_once ABSPATH . 'wp-settings.php';
